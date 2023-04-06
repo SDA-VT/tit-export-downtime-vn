@@ -83,11 +83,9 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #fffffff3;
 }
 
-body {
-
-}
 
 a {
   color: inherit;

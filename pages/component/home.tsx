@@ -43,8 +43,7 @@ function CustomToolbar() {
           display: "flex",
           pb: 0,
           justifyContent: "center",
-          mt: 2,
-          bgcolor: "background.paper",
+          bgcolor: "#f8f3f4e8",
           borderRadius: 1,
           height: 60,
         }}
@@ -57,7 +56,7 @@ function CustomToolbar() {
           {/* <GridToolbarExport /> */}
         </GridToolbarContainer>
         <GridToolbarQuickFilter
-          sx={{ mt: 1 }}
+          sx={{ mt: 2 }}
           quickFilterParser={(searchInput: string) =>
             searchInput
               .split(",")
@@ -74,124 +73,73 @@ const columns: GridColDef[] = [
   //   { field: "id", headerName: "ID", width: 90 },
   {
     field: "PD_key",
+    headerClassName: "super-app-theme--header",
     headerName: "PD key",
-    width: 150,
+    width: 120,
     editable: true,
   },
   {
     field: "Work_order_id",
+    headerClassName: "super-app-theme--header",
     headerName: "Work order id",
-    width: 150,
+    width: 120,
     editable: true,
   },
   {
-    field: "Item_number",
-    headerName: "Item number",
-    width: 110,
+    field: "Downtime_code",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_code",
+    width: 120,
     editable: true,
   },
   {
-    field: "Production_unit",
-    headerName: "Production_unit",
-    width: 160,
-  },
-  {
-    field: "Production_date",
-    headerName: "Production_date",
-    width: 160,
-  },
-  {
-    field: "Shift",
-    headerName: "Shift",
-    width: 160,
+    field: "Downtime_description_th",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_description_th",
+    width: 250,
   },
   {
     field: "Begin_time",
+    headerClassName: "super-app-theme--header",
     headerName: "Begin_time",
-    width: 160,
+    width: 120,
   },
   {
     field: "End_time",
+    headerClassName: "super-app-theme--header",
     headerName: "End_time",
-    width: 160,
+    width: 120,
   },
   {
-    field: "Duration_time",
-    headerName: "Duration_time [min]",
-    width: 160,
+    field: "Duration_downtime",
+    headerClassName: "super-app-theme--header",
+    headerName: "Duration_downtime",
+    width: 120,
   },
   {
-    field: "Runtime",
-    headerName: "Runtime [min]",
-    width: 160,
+    field: "Date_record",
+    headerClassName: "super-app-theme--header",
+    headerName: "Date_record",
+    width: 120,
   },
   {
-    field: "Standard_time",
-    headerName: "Standard_time [sec/pcs]",
-    width: 180,
+    field: "Downtime_description_en",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_description_en",
+    width: 250,
   },
   {
-    field: "Manpower_number",
-    headerName: "Manpower_number",
-    width: 160,
+    field: "Downtime_description_cn",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_description_cn",
+    width: 250,
   },
   {
-    field: "OK_qty",
-    headerName: "OK_qty",
-    width: 160,
+    field: "Downtime_description_vn",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_description_vn",
+    width: 300,
   },
-  {
-    field: "NG_F_qty",
-    headerName: "NG_F_qty",
-    width: 160,
-  },
-  {
-    field: "NG_C_qty",
-    headerName: "NG_C_qty",
-    width: 160,
-  },
-  {
-    field: "Cycle_time",
-    headerName: "Cycle_time [min/pcs]",
-    width: 160,
-  },
-  {
-    field: "Availability_percent",
-    headerName: "Availability_percent",
-    width: 160,
-  },
-  {
-    field: "Performance_percent",
-    headerName: "Performance_percent",
-    width: 160,
-  },
-  {
-    field: "Quality_percent",
-    headerName: "Quality_percent",
-    width: 160,
-  },
-  {
-    field: "OEE_percent",
-    headerName: "OEE_percent",
-    width: 160,
-  },
-  {
-    field: "LT_number",
-    headerName: "LT_number",
-    width: 160,
-  },
-];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
 export default function Homes() {
@@ -227,69 +175,27 @@ export default function Homes() {
   //   console.log("valueEnd", dayjs(valueEnd).format("YYYY-MM-DD"));
 
   useEffect(() => {
-    if (valueShift == "All") {
-      const fetchdataALL = async () => {
-        let { data: Production_history, error } = await supabase
-          .from("Production_history")
-          .select("*")
-          .eq("OBU_status", "Transfer_done")
-          .filter("Shift", "in", '("Day","Night")')
-          .gte("Production_date", dayjs(valueStart).format("YYYY-MM-DD"))
-          .lte("Production_date", dayjs(valueEnd).format("YYYY-MM-DD"));
-        if (!error) {
-          console.log("fetch Success :D", Production_history);
-          setDataShow(Production_history);
-        } else {
-          console.log("fetch Error !!!");
-        }
-      };
-      fetchdataALL();
-    }
-
-    if (valueShift == "Day") {
-      const fetchdataDay = async () => {
-        let { data: Production_history, error } = await supabase
-          .from("Production_history")
-          .select("*")
-          .eq("OBU_status", "Transfer_done")
-          .filter("Shift", "in", '("Day")')
-          .gte("Production_date", dayjs(valueStart).format("YYYY-MM-DD"))
-          .lte("Production_date", dayjs(valueEnd).format("YYYY-MM-DD"));
-        if (!error) {
-          console.log("fetch Success :D", Production_history);
-          setDataShow(Production_history);
-        } else {
-          console.log("fetch Error !!!");
-        }
-      };
-      fetchdataDay();
-    }
-
-    if (valueShift == "Night") {
-      const fetchdataNight = async () => {
-        let { data: Production_history, error } = await supabase
-          .from("Production_history")
-          .select("*")
-          .eq("OBU_status", "Transfer_done")
-          .filter("Shift", "in", '("Night")')
-          .gte("Production_date", dayjs(valueStart).format("YYYY-MM-DD"))
-          .lte("Production_date", dayjs(valueEnd).format("YYYY-MM-DD"));
-        if (!error) {
-          console.log("fetch Success :D", Production_history);
-          setDataShow(Production_history);
-        } else {
-          console.log("fetch Error !!!");
-        }
-      };
-      fetchdataNight();
-    }
-  }, [valueEnd, valueShift]);
+    const fetchdataALL = async () => {
+      let { data: Downtime_record, error } = await supabase
+        .from("Downtime_record")
+        .select("*")
+        .gte("Date_record", dayjs(valueStart).format())
+        .lte("Date_record", dayjs(valueEnd).format());
+      if (!error) {
+        console.log("fetch Success :D", Downtime_record);
+        setDataShow(Downtime_record);
+      } else {
+        console.log("fetch Error !!!");
+      }
+    };
+    fetchdataALL();
+  }, [valueStart, valueEnd]);
 
   const handleOnExport = () => {
     let wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet(dataShow);
     XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
-    XLSX.writeFile(wb, "Work_order.xlsx");
+    XLSX.writeFile(wb, "Downtime_record.xlsx");
   };
 
   return (
@@ -297,8 +203,14 @@ export default function Homes() {
       <Box sx={{ flexGrow: 1, m: 5 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={5}>
-            <Typography variant="h3" gutterBottom>
-              TIT Export file Production History
+            <Typography
+              variant="h2"
+              gutterBottom
+              align="center"
+              fontFamily={"Sans-serif"}
+              fontStyle={"italic"}
+            >
+              TIT Export file Production Downtime Record
             </Typography>
           </Grid>
           <Grid item xs={6} lg={2}>
@@ -319,25 +231,8 @@ export default function Homes() {
               />
             </LocalizationProvider>
           </Grid>
-          <Grid item xs={6} lg={1}>
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-multiple-name-label">Shift</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  value={valueShift}
-                  label="All"
-                  onChange={(e) => setValueShift(e.target.value)}
-                >
-                  <MenuItem value={"All"}>All</MenuItem>
-                  <MenuItem value={"Day"}>Day</MenuItem>
-                  <MenuItem value={"Night"}>Night</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item xs={6} lg={2}>
+
+          <Grid item xs={12} lg={2}>
             <Button
               variant="contained"
               onClick={handleOnExport}
@@ -349,12 +244,22 @@ export default function Homes() {
           </Grid>
         </Grid>
       </Box>
-      <Box sx={{ p: 2, height: 650, width: "100%", display: "flow" }}>
+      <Box
+        sx={{
+          p: 2,
+          height: 650,
+          width: "100%",
+          display: "flow",
+          "& .super-app-theme--header": {
+            backgroundColor: "rgba(255, 7, 0, 0.55)",
+          },
+        }}
+      >
         <DataGrid
           rows={dataShow}
           columns={columns}
           components={{ Toolbar: CustomToolbar }}
-          getRowId={(row: any) => row.PD_key}
+          getRowId={(row: any) => row.id}
           initialState={{
             pagination: {
               paginationModel: {
