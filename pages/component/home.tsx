@@ -203,7 +203,7 @@ export default function Homes() {
     <>
       <Box sx={{ flexGrow: 1, m: 5 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={5}>
+          <Grid item xs={12} lg={6}>
             <Typography
               variant="h2"
               gutterBottom
@@ -217,6 +217,7 @@ export default function Homes() {
           <Grid item xs={6} lg={2}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                sx={{ width: "100%" }}
                 label="Start"
                 value={valueStart}
                 onChange={(newValue) => setValueStart(newValue)}
@@ -226,6 +227,7 @@ export default function Homes() {
           <Grid item xs={6} lg={2}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
+                sx={{ width: "100%" }}
                 label="End"
                 value={valueEnd}
                 onChange={(newValue) => setValueEnd(newValue)}
