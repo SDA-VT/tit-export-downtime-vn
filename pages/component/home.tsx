@@ -166,7 +166,7 @@ export default function Homes() {
   //   }, []);
   const currentDate = `${year}-${month}-${day}`;
   const [dataShow, setDataShow] = useState<any>([]);
-  //   console.log("dataShow", dataShow);
+  // console.log("dataShow", dataShow);
 
   const [valueStart, setValueStart] = useState<Dayjs | null>(
     dayjs(currentDate)
@@ -180,7 +180,8 @@ export default function Homes() {
         .from("Downtime_record")
         .select("*")
         .gte("Date_record", dayjs(valueStart).format())
-        .lte("Date_record", dayjs(valueEnd).format());
+        .lte("Date_record", dayjs(valueEnd).format())
+        .order("id", { ascending: true });
       if (!error) {
         console.log("fetch Success :D", Downtime_record);
         setDataShow(Downtime_record);
