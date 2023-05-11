@@ -86,65 +86,58 @@ const columns: GridColDef[] = [
     editable: true,
   },
   {
-    field: "Item_number",
+    field: "Downtime_code",
     headerClassName: "super-app-theme--header",
-    headerName: "Item number",
-    width: 150,
+    headerName: "Downtime_code",
+    width: 120,
     editable: true,
   },
   {
-    field: "Production_date",
+    field: "Downtime_description_th",
     headerClassName: "super-app-theme--header",
-    headerName: "Production date",
-    width: 120,
-  },
-  {
-    field: "Production_unit",
-    headerClassName: "super-app-theme--header",
-    headerName: "Production unit",
-    width: 120,
-  },
-  {
-    field: "NG_qty",
-    headerClassName: "super-app-theme--header",
-    headerName: "NG qty",
-    width: 120,
-  },
-  {
-    field: "Part_name",
-    headerClassName: "super-app-theme--header",
-    headerName: "Part name",
-    width: 150,
-  },
-  {
-    field: "NG_code",
-    headerClassName: "super-app-theme--header",
-    headerName: "NG code",
-    width: 120,
-  },
-
-  {
-    field: "NG_description_th",
-    headerClassName: "super-app-theme--header",
-    headerName: "NG description th",
+    headerName: "Downtime_description_th",
     width: 250,
   },
   {
-    field: "NG_description_cn",
+    field: "Begin_time",
     headerClassName: "super-app-theme--header",
-    headerName: "NG description cn",
+    headerName: "Begin_time",
+    width: 120,
+  },
+  {
+    field: "End_time",
+    headerClassName: "super-app-theme--header",
+    headerName: "End_time",
+    width: 120,
+  },
+  {
+    field: "Duration_downtime",
+    headerClassName: "super-app-theme--header",
+    headerName: "Duration_downtime",
+    width: 120,
+  },
+  {
+    field: "Date_record",
+    headerClassName: "super-app-theme--header",
+    headerName: "Date_record",
+    width: 120,
+  },
+  {
+    field: "Downtime_description_en",
+    headerClassName: "super-app-theme--header",
+    headerName: "Downtime_description_en",
     width: 250,
   },
   {
-    field: "NG_description_en",
+    field: "Downtime_description_cn",
     headerClassName: "super-app-theme--header",
-    headerName: "NG_description_en",
-    width: 300,
+    headerName: "Downtime_description_cn",
+    width: 250,
   },
   {
-    field: "NG_description_vn",
+    field: "Downtime_description_vn",
     headerClassName: "super-app-theme--header",
-    headerName: "NG_description_vn",
+    headerName: "Downtime_description_vn",
     width: 300,
   },
 ];
@@ -185,12 +178,10 @@ export default function Homes() {
   useEffect(() => {
     const fetchdataALL = async () => {
       let { data: Downtime_record, error } = await supabase
-        .from("NG_record")
-        .select(
-          "id,PD_key,Work_order_id,Item_number,Production_date,Production_unit,NG_qty,Part_name,NG_code,NG_description_th,NG_description_cn,NG_description_en,NG_description_vn"
-        )
-        .gte("Production_date", dayjs(valueStart).format())
-        .lte("Production_date", dayjs(valueEnd).format())
+        .from("Downtime_record")
+        .select("*")
+        .gte("Date_record", dayjs(valueStart).format())
+        .lte("Date_record", dayjs(valueEnd).format())
         .order("id", { ascending: true });
       if (!error) {
         console.log("fetch Success :D", Downtime_record);
@@ -206,7 +197,7 @@ export default function Homes() {
     let wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet(dataShow);
     XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
-    XLSX.writeFile(wb, "NG_record.xlsx");
+    XLSX.writeFile(wb, "Downtime_record.xlsx");
   };
 
   return (
@@ -221,7 +212,7 @@ export default function Homes() {
               fontFamily={"Sans-serif"}
               fontStyle={"italic"}
             >
-              TIT Export file Production NG Record
+              TIT Export file Production Downtime Record
             </Typography>
           </Grid>
           <Grid item xs={6} lg={2}>
@@ -264,7 +255,7 @@ export default function Homes() {
           width: "100%",
           display: "flow",
           "& .super-app-theme--header": {
-            backgroundColor: "#ffa000",
+            backgroundColor: "rgba(255, 7, 0, 0.55)",
           },
         }}
       >
