@@ -16,7 +16,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Button from "@mui/material/Button";
-import supabase from "@/comporment config/supabase";
+import supabase from "../../comporment config/supabase";
 import * as XLSX from "xlsx";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -212,7 +212,7 @@ export default function Homes() {
               fontFamily={"Sans-serif"}
               fontStyle={"italic"}
             >
-              TIT Export file Production Downtime Record
+              TIT VN Export file Production Downtime Record
             </Typography>
           </Grid>
           <Grid item xs={6} lg={2}>
